@@ -1,0 +1,12 @@
+#nullable enable
+namespace RigidboysAPI.Dtos
+{
+    public class CustomerDto
+    {
+        public string OfficeName { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public string Master_name { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+        public string? Address { get; set; }
+    }
+}
