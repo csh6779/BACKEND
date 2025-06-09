@@ -108,3 +108,4 @@ C:\Users\USER\rigidboys\RigidboysAPI\obj\Debug\net8.0\refint\RigidboysAPI.dll
 C:\Users\USER\rigidboys\RigidboysAPI\obj\Debug\net8.0\RigidboysAPI.pdb
 C:\Users\USER\rigidboys\RigidboysAPI\obj\Debug\net8.0\RigidboysAPI.genruntimeconfig.cache
 C:\Users\USER\rigidboys\RigidboysAPI\obj\Debug\net8.0\ref\RigidboysAPI.dll
+C:\Users\USER\rigidboys\rigidboysapi\obj\Debug\net8.0\RigidboysAPI.sourcelink.json

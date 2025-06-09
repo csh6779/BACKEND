@@ -27,7 +27,8 @@ namespace RigidboysAPI.Services
                 Type = dto.Type,
                 Master_name = dto.Master_name,
                 Phone = dto.Phone,
-                Address = dto.Address
+                Address = dto.Address,
+                Description = dto.Description
             };
 
             _context.Customers.Add(entity);

@@ -11,8 +11,8 @@ using RigidboysAPI.Data;
 namespace RigidboysAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250606085605_Init2")]
-    partial class Init2
+    [Migration("20250609011449_AddDescriptionToCustomer")]
+    partial class AddDescriptionToCustomer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,6 @@ namespace RigidboysAPI.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Master_name")
@@ -55,6 +54,38 @@ namespace RigidboysAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("RigidboysAPI.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("License")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Product_name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Product_price")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
                 });
 #pragma warning restore 612, 618
         }

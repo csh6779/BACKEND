@@ -11,8 +11,8 @@ using RigidboysAPI.Data;
 namespace RigidboysAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250607104045_AddProductsTable")]
-    partial class AddProductsTable
+    [Migration("20250609010537_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,10 +80,6 @@ namespace RigidboysAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Product_price")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Production_price")
                         .IsRequired()
                         .HasColumnType("longtext");
 

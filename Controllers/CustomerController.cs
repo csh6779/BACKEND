@@ -23,10 +23,11 @@ namespace RigidboysAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CustomerDto dto)
+        public async Task<IActionResult> Create([FromBody] CustomerDto dto)
         {
             await _service.AddCustomerAsync(dto);
             return Ok(new { message = "신규 고객사를 저장했습니다." });
         }
+        
     }
 }
