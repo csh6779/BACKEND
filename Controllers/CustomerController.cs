@@ -25,8 +25,15 @@ namespace RigidboysAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CustomerDto dto)
         {
-            await _service.AddCustomerAsync(dto);
-            return Ok(new { message = "신규 고객사를 저장했습니다." });
+             try
+            {
+                 await _service.AddCustomerAsync(dto);
+                return Ok(new { message = "고객이 등록되었습니다." });
+             }
+            catch (InvalidOperationException ex)
+            {       
+                return Conflict(new { error = ex.Message });  // HTTP 409 중복 에러
+            }
         }
         
     }

@@ -19,8 +19,13 @@ namespace RigidboysAPI.Services
             return await _context.Products.ToListAsync();
         }
 
-        public async Task AddCustomerAsync(ProductDto dto)
+        public async Task AddProductAsync(ProductDto dto)
         {
+            bool exists = await _context.Products.AnyAsync(p => p.Product_name == dto.Product_name);
+            if (exists)
+            {
+                 throw new InvalidOperationException("이미 등록된 제품명입니다.");
+            }
             var entity = new Product
             {
                 Product_name = dto.Product_name,

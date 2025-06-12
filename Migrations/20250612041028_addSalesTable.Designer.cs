@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RigidboysAPI.Data;
 
@@ -11,9 +12,11 @@ using RigidboysAPI.Data;
 namespace RigidboysAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612041028_addSalesTable")]
+    partial class addSalesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace RigidboysAPI.Migrations
 
                     b.Property<string>("OfficeName")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -53,9 +56,6 @@ namespace RigidboysAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OfficeName")
-                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -81,16 +81,13 @@ namespace RigidboysAPI.Migrations
 
                     b.Property<string>("Product_name")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Product_price")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Product_name")
-                        .IsUnique();
 
                     b.ToTable("Products");
                 });

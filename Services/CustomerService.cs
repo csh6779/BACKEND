@@ -21,6 +21,11 @@ namespace RigidboysAPI.Services
 
         public async Task AddCustomerAsync(CustomerDto dto)
         {
+            bool exists = await _context.Customers.AnyAsync(c => c.OfficeName == dto.OfficeName);
+            if (exists)
+            {
+                throw new InvalidOperationException("이미 등록된 고객사입니다.");
+            }
             var entity = new Customer
             {
                 OfficeName = dto.OfficeName,
