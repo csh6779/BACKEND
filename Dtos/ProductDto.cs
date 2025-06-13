@@ -6,7 +6,7 @@ namespace RigidboysAPI.Dtos
     public class ProductDto
     {
         [Required(ErrorMessage ="제품명을 입력해주세요!")]
-        public string Product_name { get; set; } = string.Empty;
+        public string Product_Name { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "카테고리를 입력해주세요!")]
         public string Category { get; set; } = string.Empty;

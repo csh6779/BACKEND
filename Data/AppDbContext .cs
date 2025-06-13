@@ -18,13 +18,13 @@ namespace RigidboysAPI.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Customer>()
-                .HasIndex(c => c.OfficeName)
+                .HasIndex(c => c.Office_Name)
                 .IsUnique();  // ✅ OfficeName 중복 방지
             modelBuilder.Entity<Product>()
-                .HasIndex(p => p.Product_name)
+                .HasIndex(p => p.Product_Name)
                 .IsUnique();
             modelBuilder.Entity<Purchase>()
-           .HasIndex(p => p.OfficeName)
+           .HasIndex(p => p.Office_Name)
            .IsUnique();
         }
     }

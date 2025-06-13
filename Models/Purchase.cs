@@ -1,12 +1,13 @@
 #nullable enable
 using System.ComponentModel.DataAnnotations;
 
-namespace RigidboysAPI.Dtos
+namespace RigidboysAPI.Models
 {
     public class Purchase
     {
+        public int id{ get; set; }
         public string Purchase_or_Sale { get; set; } = string.Empty;
-        public string OfficeName { get; set; } = string.Empty;
+        public string Office_Name { get; set; } = string.Empty;
         public DateTime? Date { get; set; }
         public string Product_Name { get; set; } = string.Empty;
         public int? Amount { get; set; }

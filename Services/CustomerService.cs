@@ -21,16 +21,16 @@ namespace RigidboysAPI.Services
 
         public async Task AddCustomerAsync(CustomerDto dto)
         {
-            bool exists = await _context.Customers.AnyAsync(c => c.OfficeName == dto.OfficeName);
+            bool exists = await _context.Customers.AnyAsync(c => c.Office_Name == dto.Office_Name);
             if (exists)
             {
                 throw new InvalidOperationException("이미 등록된 고객사입니다.");
             }
             var entity = new Customer
             {
-                OfficeName = dto.OfficeName,
+                Office_Name = dto.Office_Name,
                 Type = dto.Type,
-                Master_name = dto.Master_name,
+                Master_Name = dto.Master_Name,
                 Phone = dto.Phone,
                 Address = dto.Address,
                 Description = dto.Description
@@ -42,7 +42,7 @@ namespace RigidboysAPI.Services
         public async Task<List<string>> GetCustomerNamesAsync()
         {
             return await _context.Customers
-                .Select(c => c.OfficeName)
+                .Select(c => c.Office_Name)
                 .Distinct()
                 .ToListAsync();
         }

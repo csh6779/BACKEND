@@ -21,14 +21,14 @@ namespace RigidboysAPI.Services
 
         public async Task AddProductAsync(ProductDto dto)
         {
-            bool exists = await _context.Products.AnyAsync(p => p.Product_name == dto.Product_name);
+            bool exists = await _context.Products.AnyAsync(p => p.Product_Name == dto.Product_Name);
             if (exists)
             {
-                 throw new InvalidOperationException("이미 등록된 제품명입니다.");
+                throw new InvalidOperationException("이미 등록된 제품명입니다.");
             }
             var entity = new Product
             {
-                Product_name = dto.Product_name,
+                Product_Name = dto.Product_Name,
                 Category = dto.Category,
                 License = dto.License,
                 Product_price = dto.Product_price,
@@ -37,6 +37,13 @@ namespace RigidboysAPI.Services
 
             _context.Products.Add(entity);
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<string>> GetProductNamesAsync()
+        {
+            return await _context.Products
+                .Select(p => p.Product_Name)
+                .Distinct()
+                .ToListAsync();
         }
     }
 }

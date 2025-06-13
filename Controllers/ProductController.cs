@@ -35,6 +35,13 @@ namespace RigidboysAPI.Controllers
                 return Conflict(new { error = ex.Message });  // HTTP 409 중복 에러
             }
         }
+        [HttpGet("Product_Names")]
+        public async Task<ActionResult<List<string>>> GetProductNames()
+        {
+            var names = await _service.GetProductNamesAsync();
+            return Ok(names);
+        }
+
 
     }
 }

@@ -12,7 +12,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // 2️⃣ 서비스 등록 (DI)
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<CustomerMutationService>();
+
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProductMutationService>();
+
 builder.Services.AddScoped<PurchaseService>();
 
 // ✅ ✅ ✅ CORS 정책 등록 추가

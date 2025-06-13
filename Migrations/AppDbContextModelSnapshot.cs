@@ -36,11 +36,11 @@ namespace RigidboysAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Master_name")
+                    b.Property<string>("Master_Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("OfficeName")
+                    b.Property<string>("Office_Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -54,7 +54,7 @@ namespace RigidboysAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfficeName")
+                    b.HasIndex("Office_Name")
                         .IsUnique();
 
                     b.ToTable("Customers");
@@ -79,7 +79,7 @@ namespace RigidboysAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Product_name")
+                    b.Property<string>("Product_Name")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -89,47 +89,62 @@ namespace RigidboysAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Product_name")
+                    b.HasIndex("Product_Name")
                         .IsUnique();
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("RigidboysAPI.Models.Sales", b =>
+            modelBuilder.Entity("RigidboysAPI.Models.Purchase", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int?>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DeadLine")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("OfficeName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<bool?>("Is_Payment")
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Product_name")
+                    b.Property<string>("Office_Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("Sales_Amount")
+                    b.Property<int?>("Paid_Payment")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Sales_Date")
+                    b.Property<DateTime?>("PayDone")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Sales_Price")
+                    b.Property<int?>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Product_Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("Total_Price")
-                        .HasColumnType("int");
+                    b.Property<string>("Purchase_or_Sale")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.ToTable("Sales");
+                    b.HasIndex("Office_Name")
+                        .IsUnique();
+
+                    b.ToTable("Purchase");
                 });
 #pragma warning restore 612, 618
         }

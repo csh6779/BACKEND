@@ -24,7 +24,7 @@ namespace RigidboysAPI.Services
     // 중복 조건: 거래방식 + 고객사명 + 거래일 + 제품명 + 납기일
     var existing = await _context.Purchase.FirstOrDefaultAsync(p =>
         p.Purchase_or_Sale == dto.Purchase_or_Sale &&
-        p.OfficeName == dto.OfficeName &&
+        p.Office_Name == dto.Office_Name &&
         p.Date == dto.Date &&
         p.Product_Name == dto.Product_Name &&
         p.DeadLine == dto.DeadLine
@@ -49,7 +49,7 @@ namespace RigidboysAPI.Services
         var entity = new Purchase
         {
             Purchase_or_Sale = dto.Purchase_or_Sale,
-            OfficeName = dto.OfficeName,
+            Office_Name = dto.Office_Name,
             Date = dto.Date,
             Product_Name = dto.Product_Name,
             Amount = dto.Amount,

@@ -9,7 +9,7 @@ namespace RigidboysAPI.Dtos
         public string Purchase_or_Sale { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "고객사명을 입력해주세요!")]
-        public string OfficeName { get; set; } = string.Empty;
+        public string Office_Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "거래일을 입력해주세요!")]
         public DateTime? Date { get; set; }
