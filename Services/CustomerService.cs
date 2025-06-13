@@ -39,5 +39,12 @@ namespace RigidboysAPI.Services
             _context.Customers.Add(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<string>> GetCustomerNamesAsync()
+        {
+            return await _context.Customers
+                .Select(c => c.OfficeName)
+                .Distinct()
+                .ToListAsync();
+        }
     }
 }
