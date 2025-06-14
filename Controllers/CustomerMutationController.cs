@@ -19,8 +19,15 @@ namespace RigidboysAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CustomerDto dto)
         {
-            await _mutationService.UpdateAsync(id, dto);
-            return Ok("고객 정보 수정 완료");
+            try
+            {
+                await _mutationService.UpdateAsync(id, dto);
+                return Ok("고객사 정보 수정 완료");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // ✅ 고객 정보 삭제
