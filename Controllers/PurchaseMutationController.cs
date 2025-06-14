@@ -7,32 +7,32 @@ using RigidboysAPI.Errors;
 namespace RigidboysAPI.Controllers
 {
     [ApiController]
-    [Route("api/products/mutation")]
-    public class ProductMutationController : ControllerBase
+    [Route("api/purchases/mutation")]
+    public class PurchaseMutationController : ControllerBase
     {
-        private readonly ProductMutationService _mutationService;
+        private readonly PurchaseMutationService _mutationService;
 
-        public ProductMutationController(ProductMutationService mutationService)
+        public PurchaseMutationController(PurchaseMutationService mutationService)
         {
             _mutationService = mutationService;
         }
 
-        // ✅ 제품 정보 수정
+        // ✅ 매입 / 매출 정보 수정
         [HttpPut("{id}")]
         [SwaggerOperation(
-            Summary = "제품의 정보를 수정합니다.",
-            Tags = new[] { "제품 관리" } // ✅ 여기에 태그 입력
+            Summary = "매입 / 매출의 정보를 수정합니다.",
+            Tags = new[] { "매입 / 매출 관리" } // ✅ 여기에 태그 입력
         )]
         [SwaggerResponse(200, "수정 성공")]
         [SwaggerResponse(400, "입력값 오류")]
-        [SwaggerResponse(404, "제품을 찾을 수 없음")]
+        [SwaggerResponse(404, "매입 / 매출 정보를 찾을 수 없음")]
         [SwaggerResponse(500, "서버 오류")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] PurchaseDto dto)
         {
             try
             {
                 await _mutationService.UpdateAsync(id, dto);
-                return Ok("제품 정보 수정 완료");
+                return Ok("매입 / 매출 수정 완료");
             }
             catch (ArgumentException) //400
             {
@@ -57,34 +57,35 @@ namespace RigidboysAPI.Controllers
             }
         }
 
-        // ✅ 제품 정보 삭제
+        // ✅ 고객 정보 삭제
         [HttpDelete("{id}")]
         [SwaggerOperation(
-            Summary = "제품의 정보를 수정합니다.",
-            Tags = new[] { "제품 관리" } // ✅ 여기에 태그 입력
+            Summary = "매입 / 매출의 정보를 삭제합니다.",
+            Tags = new[] { "매입 / 매출 관리" } // ✅ 여기에 태그 입력
         )]
         [SwaggerResponse(200, "삭제 성공")]
-        [SwaggerResponse(404, "제품을 찾을 수 없음")]
+        [SwaggerResponse(404, "매입 / 매출 정보를 찾을 수 없음")]
         [SwaggerResponse(500, "서버 오류")]
+
         public async Task<IActionResult> Delete(int id)
         {
-           try
+             try
             {
                 await _mutationService.DeleteAsync(id);
-                return Ok(new { message = "제품 삭제 완료" });
+                return Ok(new { message = "매입 / 매출 정보 삭제 완료" });
             }
             catch (InvalidOperationException ex) //404
             {
                 return NotFound(new
                 {
-                    code = ErrorCodes.PRODUCT_NOT_FOUND,
+                    code = ErrorCodes.PURCHASE_NOT_FOUND,
                     message = ex.Message
                 });
             }
             catch (Exception ex) //500
             {
                 return ErrorResponseHelper.HandleServerError(
-                    ErrorCodes.PRODUCT_NOT_FOUND_MESSAGE,
+                    ErrorCodes.PURCHASE_NOT_FOUND_MESSAGE,
                     ex.Message
                 );
             }

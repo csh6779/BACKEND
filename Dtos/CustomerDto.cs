@@ -12,7 +12,7 @@ namespace RigidboysAPI.Dtos
         public string Type { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "담당자명을 입력해주세요!")]
-        public string Master_Name { get; set; } = string.Empty;
+        public string  Master_Name{ get; set; } = string.Empty;
         
         [Required(ErrorMessage = "연락처를 입력해주세요!")]
         public string Phone { get; set; } = string.Empty;

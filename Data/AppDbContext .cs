@@ -10,22 +10,23 @@ namespace RigidboysAPI.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Purchase> Purchase { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }  // ✅ 복수형으로 수정
 
-        // ✅ 클래스 내부에 OnModelCreating 추가
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Customer>()
                 .HasIndex(c => c.Office_Name)
-                .IsUnique();  // ✅ OfficeName 중복 방지
+                .IsUnique();
+
             modelBuilder.Entity<Product>()
                 .HasIndex(p => p.Product_Name)
                 .IsUnique();
+
             modelBuilder.Entity<Purchase>()
-           .HasIndex(p => p.Office_Name)
-           .IsUnique();
+                .HasIndex(p => new { p.Customer_Name, p.Purchased_Date, p.Product_Name })
+                .IsUnique();
         }
     }
 }

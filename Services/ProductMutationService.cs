@@ -33,7 +33,8 @@ namespace RigidboysAPI.Services
             product.Product_Name = dto.Product_Name;
             product.Category = dto.Category;
             product.License = dto.License;
-            product.Product_price = dto.Product_price;  // ✅ 실수 수정
+            product.Product_price = dto.Product_price;
+            product.Production_price = dto.Production_price;  // ✅ 실수 수정
             product.Description = dto.Description;
 
             _context.Products.Update(product);  // ✅ 복수형으로 수정

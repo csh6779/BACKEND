@@ -16,56 +16,40 @@ namespace RigidboysAPI.Services
 
         public async Task<List<Purchase>> GetAllAsync()
         {
-            return await _context.Purchase.ToListAsync();
+            return await _context.Purchases.ToListAsync();
         }
 
-        public async Task AddOrUpdatePurchaseAsync(PurchaseDto dto)
-{
-    // 중복 조건: 거래방식 + 고객사명 + 거래일 + 제품명 + 납기일
-    var existing = await _context.Purchase.FirstOrDefaultAsync(p =>
-        p.Purchase_or_Sale == dto.Purchase_or_Sale &&
-        p.Office_Name == dto.Office_Name &&
-        p.Date == dto.Date &&
-        p.Product_Name == dto.Product_Name &&
-        p.DeadLine == dto.DeadLine
-    );
-
-    if (existing != null)
-    {
-        // 기존 데이터 존재 → 누적
-        existing.Amount += dto.Amount ?? 0;
-        existing.Price += dto.Price ?? 0;
-        existing.Paid_Payment += dto.Paid_Payment ?? 0;
-
-        existing.Is_Payment = dto.Is_Payment;
-        existing.PayDone = dto.PayDone;
-        existing.Description = dto.Description;
-
-        _context.Purchase.Update(existing);
-    }
-    else
-    {
-        // 새 데이터 삽입
-        var entity = new Purchase
+        public async Task AddPurchaseAsync(PurchaseDto dto)
         {
-            Purchase_or_Sale = dto.Purchase_or_Sale,
-            Office_Name = dto.Office_Name,
-            Date = dto.Date,
-            Product_Name = dto.Product_Name,
-            Amount = dto.Amount,
-            Price = dto.Price,
-            DeadLine = dto.DeadLine,
-            PayDone = dto.PayDone,
-            Is_Payment = dto.Is_Payment,
-            Description = dto.Description,
-            Paid_Payment = dto.Paid_Payment
-        };
+            var exists = await _context.Purchases.AnyAsync(p =>
+        p.Customer_Name == dto.Customer_Name &&
+        p.Purchased_Date == dto.Purchased_Date &&
+        p.Product_Name == dto.Product_Name);
 
-        await _context.Purchase.AddAsync(entity);
-    }
+            if (exists)
+            {
+                throw new InvalidOperationException("같은 고객, 날짜, 제품의 구매 내역이 이미 존재합니다.");
+            }
+            var entity = new Purchase
+            {
+                Purchase_or_Sale = dto.Purchase_or_Sale,
+                Customer_Name = dto.Customer_Name,
+                Purchased_Date = dto.Purchased_Date,
+                Product_Name = dto.Product_Name,
+                Purchase_Amount = dto.Purchase_Amount,
+                Purchase_Price = dto.Purchase_Price,
+                Payment_Period_Deadline = dto.Payment_Period_Deadline,
+                Payment_Period_Start = dto.Payment_Period_Start,
+                Payment_Period_End = dto.Payment_Period_End,
+                Is_Payment = dto.Is_Payment,
+                Description = dto.Description,
+                Paid_Payment = dto.Paid_Payment,
+                Seller_Name = dto.Seller_Name ?? string.Empty
+            };
 
-    await _context.SaveChangesAsync();
-}
+            await _context.Purchases.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

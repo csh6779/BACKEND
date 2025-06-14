@@ -52,8 +52,8 @@ namespace RigidboysAPI.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     License = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Product_price = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Product_price = table.Column<int>(type: "int", nullable: true),
+                    Production_price = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -64,30 +64,33 @@ namespace RigidboysAPI.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Purchase",
+                name: "Purchases",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Seller_Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Purchase_or_Sale = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Office_Name = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Customer_Name = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Product_Name = table.Column<string>(type: "longtext", nullable: false)
+                    Purchased_Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Product_Name = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Amount = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: true),
-                    DeadLine = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    PayDone = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Purchase_Amount = table.Column<int>(type: "int", nullable: true),
+                    Purchase_Price = table.Column<int>(type: "int", nullable: true),
+                    Payment_Period_Start = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Payment_Period_End = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Payment_Period_Deadline = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Is_Payment = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    Paid_Payment = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Paid_Payment = table.Column<int>(type: "int", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Purchase", x => x.id);
+                    table.PrimaryKey("PK_Purchases", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -104,9 +107,9 @@ namespace RigidboysAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchase_Office_Name",
-                table: "Purchase",
-                column: "Office_Name",
+                name: "IX_Purchases_Customer_Name_Purchased_Date_Product_Name",
+                table: "Purchases",
+                columns: new[] { "Customer_Name", "Purchased_Date", "Product_Name" },
                 unique: true);
         }
 
@@ -120,7 +123,7 @@ namespace RigidboysAPI.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Purchase");
+                name: "Purchases");
         }
     }
 }

@@ -1,21 +1,49 @@
 #nullable enable
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RigidboysAPI.Models
 {
     public class Purchase
     {
-        public int id{ get; set; }
+        public int Id { get; set; }
+
+        [Column("Seller_Name")]
+        public string Seller_Name { get; set; } = string.Empty;
+
+        [Column("Purchase_or_Sale")]
         public string Purchase_or_Sale { get; set; } = string.Empty;
-        public string Office_Name { get; set; } = string.Empty;
-        public DateTime? Date { get; set; }
+
+        [Column("Customer_Name")]
+        public string Customer_Name { get; set; } = string.Empty;
+
+        [Column("Purchased_Date")]
+        public DateTime? Purchased_Date { get; set; }
+
+        [Column("Product_Name")]
         public string Product_Name { get; set; } = string.Empty;
-        public int? Amount { get; set; }
-        public int? Price { get; set; }
-        public DateTime? DeadLine { get; set; }
-        public DateTime? PayDone { get; set; }
-        public Boolean? Is_Payment { get; set; }
+
+        [Column("Purchase_Amount")]
+        public int? Purchase_Amount { get; set; }
+
+        [Column("Purchase_Price")]
+        public int? Purchase_Price { get; set; }
+
+        [Column("Payment_Period_Start")]
+        public DateTime? Payment_Period_Start { get; set; }
+
+        [Column("Payment_Period_End")]
+        public DateTime? Payment_Period_End { get; set; }
+
+        [Column("Payment_Period_Deadline")]
+        public DateTime? Payment_Period_Deadline { get; set; }
+
+        [Column("Is_Payment")]
+        public bool? Is_Payment { get; set; }
+
+        [Column("Paid_Payment")]
+        public int? Paid_Payment { get; set; }
+
+        [Column("Description")]
         public string? Description { get; set; }
-        public int? Paid_Payment{ get; set; }
     }
 }

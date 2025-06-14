@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RigidboysAPI.Dtos;
 using RigidboysAPI.Services;
+using Swashbuckle.AspNetCore.Annotations;
+using RigidboysAPI.Errors;
 
 namespace RigidboysAPI.Controllers
 {
@@ -17,25 +19,78 @@ namespace RigidboysAPI.Controllers
 
         // ✅ 고객 정보 수정
         [HttpPut("{id}")]
+        [SwaggerOperation(
+            Summary = "고객 정보 수정",
+            Tags = new[] { "고객 관리" }
+        )]
+        [SwaggerResponse(200, "수정 성공")]
+        [SwaggerResponse(400, "입력값 오류")]
+        [SwaggerResponse(404, "고객을 찾을 수 없음")]
+        [SwaggerResponse(500, "서버 오류")]
         public async Task<IActionResult> Update(int id, [FromBody] CustomerDto dto)
         {
+            if (!ModelState.IsValid)
+                return ErrorResponseHelper.HandleBadRequest(ModelState);
+
             try
             {
                 await _mutationService.UpdateAsync(id, dto);
-                return Ok("고객사 정보 수정 완료");
+                return Ok(new { message = "고객사 정보 수정 완료" });
             }
-            catch (InvalidOperationException ex)
+            catch (ArgumentException) //400
             {
-                return BadRequest(new { message = ex.Message });
+                return ErrorResponseHelper.HandleBadRequest(
+                    ErrorCodes.INVALID_INPUT,
+                    ErrorCodes.INVALID_INPUT_MESSAGE
+                );
+            }
+            catch (InvalidOperationException) //409
+            {
+                return ErrorResponseHelper.HandleConflict(
+                    ErrorCodes.DUPLICATE_CUSTOMER,
+                    ErrorCodes.DUPLICATE_CUSTOMER_MESSAGE
+                );
+            }
+            catch (Exception ex) //500
+            {
+                return ErrorResponseHelper.HandleServerError(
+                    ErrorCodes.SERVER_ERROR,
+                    ex.Message
+                );
             }
         }
 
         // ✅ 고객 정보 삭제
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = "고객 정보 삭제",
+            Tags = new[] { "고객 관리" }
+        )]
+        [SwaggerResponse(200, "삭제 성공")]
+        [SwaggerResponse(404, "고객을 찾을 수 없음")]
+        [SwaggerResponse(500, "서버 오류")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _mutationService.DeleteAsync(id);
-            return Ok("고객 삭제 완료");
+            try
+            {
+                await _mutationService.DeleteAsync(id);
+                return Ok(new { message = "고객 삭제 완료" });
+            }
+            catch (InvalidOperationException ex) //404
+            {
+                return NotFound(new
+                {
+                    code = ErrorCodes.CUSTOMER_NOT_FOUND,
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex) //500
+            {
+                return ErrorResponseHelper.HandleServerError(
+                    ErrorCodes.CUSTOMER_NOT_FOUND_MESSAGE,
+                    ex.Message
+                );
+            }
         }
     }
 }

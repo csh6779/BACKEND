@@ -18,6 +18,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductMutationService>();
 
 builder.Services.AddScoped<PurchaseService>();
+builder.Services.AddScoped<PurchaseMutationService>();
 
 // ✅ ✅ ✅ CORS 정책 등록 추가
 builder.Services.AddCors(options =>
@@ -37,7 +38,13 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+     options.EnableAnnotations(); // ✅ Swagger 어노테이션 기능 활성화
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath); // 🔥 이 줄이 중요!
+});
 
 var app = builder.Build();
 

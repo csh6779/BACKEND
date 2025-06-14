@@ -116,6 +116,7 @@ C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\RigidboysAPI.deps.
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\RigidboysAPI.runtimeconfig.json
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\RigidboysAPI.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\RigidboysAPI.pdb
+C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\RigidboysAPI.xml
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Humanizer.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -137,6 +138,7 @@ C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Microsoft.OpenApi.
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\MySqlConnector.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -217,6 +219,7 @@ C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\scopedcss\bundle\R
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\Rigidboy.CD2F235F.Up2Date
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\RigidboysAPI.dll
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\refint\RigidboysAPI.dll
+C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\RigidboysAPI.xml
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\RigidboysAPI.pdb
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\RigidboysAPI.genruntimeconfig.cache
 C:\Users\USER\rigidboys\RigidboysAPI\BACKEND\obj\Debug\net8.0\ref\RigidboysAPI.dll

@@ -32,6 +32,7 @@ namespace RigidboysAPI.Services
                 Category = dto.Category,
                 License = dto.License,
                 Product_price = dto.Product_price,
+                Production_price = dto.Production_price,
                 Description = dto.Description
             };
 
