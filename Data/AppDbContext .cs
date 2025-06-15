@@ -11,6 +11,7 @@ namespace RigidboysAPI.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Purchase> Purchases { get; set; }  // ✅ 복수형으로 수정
+        public DbSet<User> Users{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

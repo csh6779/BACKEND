@@ -19,7 +19,7 @@ namespace RigidboysAPI.Services
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task AddCustomerAsync(CustomerDto dto)
+        public async Task AddCustomerAsync(CustomerDto dto, int userId)
         {
             bool exists = await _context.Customers.AnyAsync(c => c.Office_Name == dto.Office_Name);
             if (exists)
@@ -33,7 +33,8 @@ namespace RigidboysAPI.Services
                 Master_Name = dto.Master_Name,
                 Phone = dto.Phone,
                 Address = dto.Address,
-                Description = dto.Description
+                Description = dto.Description,
+                CreatedByUserId = userId
             };
 
             _context.Customers.Add(entity);
@@ -45,6 +46,15 @@ namespace RigidboysAPI.Services
                 .Select(c => c.Office_Name)
                 .Distinct()
                 .ToListAsync();
+        }
+
+        public async Task<List<Customer>> GetAllAsync(string role, int userId)
+        {
+        var query = _context.Customers.AsQueryable();
+        if (role != "Admin")
+            query = query.Where(c => c.CreatedByUserId == userId);
+
+        return await query.ToListAsync();
         }
     }
 }
