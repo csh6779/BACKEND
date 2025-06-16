@@ -26,7 +26,8 @@ namespace RigidboysAPI.Controllers
         [SwaggerResponse(200, "조회 성공", typeof(List<Product>))]
         public async Task<ActionResult<List<Product>>> GetAll()
         {
-            return await _service.GetAllAsync();
+            var result = await _service.GetAllAsync(); // ✅ 수정된 부분
+            return Ok(result);
         }
 
         [HttpPost]
@@ -41,7 +42,7 @@ namespace RigidboysAPI.Controllers
         [SwaggerResponse(500, "서버 오류")]
         public async Task<IActionResult> Create([FromBody] ProductDto dto)
         {
-             if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return ErrorResponseHelper.HandleBadRequest(ModelState);
             try
             {

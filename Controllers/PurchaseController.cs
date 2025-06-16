@@ -27,7 +27,14 @@ namespace RigidboysAPI.Controllers
         [SwaggerResponse(200, "조회 성공", typeof(List<Purchase>))]
         public async Task<ActionResult<List<Purchase>>> GetAll()
         {
-            return await _service.GetAllAsync();
+            var role = User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+            var userId = User.FindFirst("UserId")?.Value;
+
+            if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(userId))
+                return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
+
+            var result = await _service.GetAllAsync(role, userId); // ✅ 변경
+            return Ok(result);
         }
 
         [HttpPost]
@@ -41,11 +48,15 @@ namespace RigidboysAPI.Controllers
         [SwaggerResponse(500, "서버 오류")]
         public async Task<IActionResult> Create([FromBody] PurchaseDto dto)
         {
-             if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return ErrorResponseHelper.HandleBadRequest(ModelState);
+
+            var userId = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
             try
             {
-                await _service.AddPurchaseAsync(dto);
+                await _service.AddPurchaseAsync(dto, userId);
                 return Ok(new { message = "매입/매출 정보가 등록되었습니다." });
             }
             catch (ArgumentException) //400

@@ -1,1 +1,12 @@
 global.json
+bin/
+obj/
+*.user
+*.suo
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+.vscode/
+*.vs/

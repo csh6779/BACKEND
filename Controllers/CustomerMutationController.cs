@@ -3,6 +3,7 @@ using RigidboysAPI.Dtos;
 using RigidboysAPI.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using RigidboysAPI.Errors;
+using System.Security.Claims;
 
 namespace RigidboysAPI.Controllers
 {
@@ -31,10 +32,15 @@ namespace RigidboysAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return ErrorResponseHelper.HandleBadRequest(ModelState);
-
             try
             {
-                await _mutationService.UpdateAsync(id, dto);
+                var role = User.FindFirst(ClaimTypes.Role)?.Value;
+                var userId = User.FindFirst("UserId")?.Value;
+
+                if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(userId))
+                    return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
+
+                await _mutationService.UpdateAsync(id, dto, role, userId);
                 return Ok(new { message = "고객사 정보 수정 완료" });
             }
             catch (ArgumentException) //400
@@ -73,7 +79,12 @@ namespace RigidboysAPI.Controllers
         {
             try
             {
-                await _mutationService.DeleteAsync(id);
+                var role = User.FindFirst(ClaimTypes.Role)?.Value;
+                var userId = User.FindFirst("UserId")?.Value;
+
+                if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(userId))
+                    return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
+                await _mutationService.DeleteAsync(id, role, userId);
                 return Ok(new { message = "고객 삭제 완료" });
             }
             catch (InvalidOperationException ex) //404

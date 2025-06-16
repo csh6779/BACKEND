@@ -16,7 +16,7 @@ namespace RigidboysAPI.Services
 
         public async Task<List<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.ToListAsync(); // ✅ 여기만 호출
         }
 
         public async Task AddProductAsync(ProductDto dto)
@@ -26,6 +26,7 @@ namespace RigidboysAPI.Services
             {
                 throw new InvalidOperationException("이미 등록된 제품명입니다.");
             }
+
             var entity = new Product
             {
                 Product_Name = dto.Product_Name,
@@ -39,6 +40,7 @@ namespace RigidboysAPI.Services
             _context.Products.Add(entity);
             await _context.SaveChangesAsync();
         }
+
         public async Task<List<string>> GetProductNamesAsync()
         {
             return await _context.Products

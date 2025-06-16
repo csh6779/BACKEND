@@ -45,5 +45,8 @@ namespace RigidboysAPI.Models
 
         [Column("Description")]
         public string? Description { get; set; }
+
+        [Column("CreatedByUserId")]
+        public int CreatedByUserId { get; set; }
     }
 }

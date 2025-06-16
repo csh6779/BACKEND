@@ -14,30 +14,48 @@ namespace RigidboysAPI.Services
             _context = context;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, string role, string userId)
         {
-            var customer = await _context.Customers.FindAsync(id);  // ✅ 복수형으로 수정
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
                 throw new InvalidOperationException("삭제할 고객사가 없습니다.");
 
-            _context.Customers.Remove(customer);  // ✅ 변수 이름도 수정
+            if (role != "Admin")
+            {
+                if (!int.TryParse(userId, out int parsedUserId))
+                    throw new UnauthorizedAccessException("유효하지 않은 사용자 정보입니다.");
+
+                if (customer.CreatedByUserId != parsedUserId)
+                    throw new UnauthorizedAccessException("권한이 없습니다.");
+            }
+
+            _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, CustomerDto dto)
+        public async Task UpdateAsync(int id, CustomerDto dto, string role, string userId)
         {
-            var customer = await _context.Customers.FindAsync(id);  // ✅ 복수형으로 수정
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
                 throw new InvalidOperationException("수정할 고객사가 없습니다.");
+
+            if (role != "Admin")
+            {
+                if (!int.TryParse(userId, out int parsedUserId))
+                    throw new UnauthorizedAccessException("유효하지 않은 사용자 정보입니다.");
+
+                if (customer.CreatedByUserId != parsedUserId)
+                    throw new UnauthorizedAccessException("권한이 없습니다.");
+            }
 
             customer.Office_Name = dto.Office_Name;
             customer.Type = dto.Type;
             customer.Master_Name = dto.Master_Name;
-            customer.Phone = dto.Phone;  // ✅ 실수 수정
+            customer.Phone = dto.Phone;
             customer.Address = dto.Address;
             customer.Description = dto.Description;
 
-            _context.Customers.Update(customer);  // ✅ 복수형으로 수정
+            _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
         }
     }

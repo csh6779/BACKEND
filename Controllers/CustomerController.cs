@@ -25,9 +25,12 @@ public class CustomerController : ControllerBase
     public async Task<ActionResult<List<Customer>>> GetAll()
     {
         var role = User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value!;
-        var userId = int.Parse(User.FindFirst("UserId")!.Value);
+        var userId = User.FindFirst("UserId")?.Value;
 
-        var result = await _service.GetAllAsync(role, userId);
+        if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(userId))
+            return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
+
+        var result = await _service.GetAllAsync(role!, userId);
         return Ok(result);
     }
 
@@ -45,9 +48,11 @@ public class CustomerController : ControllerBase
         if (!ModelState.IsValid)
             return ErrorResponseHelper.HandleBadRequest(ModelState);
 
+        var userId = User.FindFirst("UserId")?.Value;
+        if (string.IsNullOrEmpty(userId))
+            return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
         try
         {
-            var userId = int.Parse(User.FindFirst("UserId")!.Value);
             await _service.AddCustomerAsync(dto, userId);
             return Ok(new { message = "고객이 등록되었습니다." });
         }
@@ -73,7 +78,13 @@ public class CustomerController : ControllerBase
     [SwaggerResponse(200, "고객사의 이름 목록 조회 성공", typeof(List<string>))]
     public async Task<ActionResult<List<string>>> GetCustomerNames()
     {
-        var names = await _service.GetCustomerNamesAsync();
+        var role = User.FindFirst("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+        var userId = User.FindFirst("UserId")?.Value;
+
+        if (string.IsNullOrEmpty(role) || string.IsNullOrEmpty(userId))
+            return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
+
+        var names = await _service.GetCustomerNamesAsync(role,userId);
         return Ok(names);
     }
 }

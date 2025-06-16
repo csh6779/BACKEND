@@ -14,17 +14,22 @@ namespace RigidboysAPI.Services
             _context = context;
         }
 
-        public async Task<List<Purchase>> GetAllAsync()
+        public async Task<List<Purchase>> GetAllAsync(string role, string userId)
         {
-            return await _context.Purchases.ToListAsync();
+            var query = _context.Purchases.AsQueryable();
+
+            if (role != "Admin")
+                query = query.Where(p => p.CreatedByUserId == int.Parse(userId));
+
+            return await query.ToListAsync();
         }
 
-        public async Task AddPurchaseAsync(PurchaseDto dto)
+        public async Task AddPurchaseAsync(PurchaseDto dto, string userId)
         {
             var exists = await _context.Purchases.AnyAsync(p =>
-        p.Customer_Name == dto.Customer_Name &&
-        p.Purchased_Date == dto.Purchased_Date &&
-        p.Product_Name == dto.Product_Name);
+                p.Customer_Name == dto.Customer_Name &&
+                p.Purchased_Date == dto.Purchased_Date &&
+                p.Product_Name == dto.Product_Name);
 
             if (exists)
             {
@@ -44,7 +49,8 @@ namespace RigidboysAPI.Services
                 Is_Payment = dto.Is_Payment,
                 Description = dto.Description,
                 Paid_Payment = dto.Paid_Payment,
-                Seller_Name = dto.Seller_Name ?? string.Empty
+                Seller_Name = dto.Seller_Name ?? string.Empty,
+                CreatedByUserId = int.Parse(userId) // ✅ 작성자 정보 저장
             };
 
             await _context.Purchases.AddAsync(entity);
