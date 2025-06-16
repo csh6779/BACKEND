@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RigidboysAPI.Data;
 
@@ -11,9 +12,11 @@ using RigidboysAPI.Data;
 namespace RigidboysAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250616153220_AddEmailAndPhoneToUser")]
+    partial class AddEmailAndPhoneToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace RigidboysAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("LoginAttempt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FailedAttempts")
-                        .HasColumnType("int")
-                        .HasColumnName("FailedAttempts");
-
-                    b.Property<DateTime>("LastAttemptAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("LastAttemptAt");
-
-                    b.Property<DateTime?>("LockedUntil")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("NLockedUntil");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoginAttempts");
-                });
 
             modelBuilder.Entity("RigidboysAPI.Models.Customer", b =>
                 {

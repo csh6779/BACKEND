@@ -26,6 +26,7 @@ namespace RigidboysAPI.Dtos
 
         //납부를 시작한 날짜
         public DateTime? Payment_Period_Start { get; set; }
+
         //납부를 마친 날짜
         public DateTime? Payment_Period_End { get; set; }
 
@@ -37,7 +38,7 @@ namespace RigidboysAPI.Dtos
 
         [Required(ErrorMessage = "납부된 금액을 입력해주세요")]
         public int? Paid_Payment { get; set; }
-        
+
         public string? Description { get; set; }
     }
 }
