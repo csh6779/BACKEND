@@ -14,7 +14,7 @@ namespace RigidboysAPI.Services
             _context = context;
         }
 
-        public async Task DeleteAsync(int id, string role, string userId)
+        public async Task<Customer> DeleteAsync(int id, string role, string userId)
         {
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
@@ -31,9 +31,10 @@ namespace RigidboysAPI.Services
 
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
+            return customer;
         }
 
-        public async Task UpdateAsync(int id, CustomerDto dto, string role, string userId)
+        public async Task<Customer> UpdateAsync(int id, CustomerDto dto, string role, string userId)
         {
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
@@ -57,6 +58,8 @@ namespace RigidboysAPI.Services
 
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
+
+            return customer;
         }
     }
 }

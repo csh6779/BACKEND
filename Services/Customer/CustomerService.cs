@@ -19,7 +19,7 @@ namespace RigidboysAPI.Services
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task AddCustomerAsync(CustomerDto dto, string userId)
+        public async Task<Customer> AddCustomerAsync(CustomerDto dto, string userId)
         {
             bool exists = await _context.Customers.AnyAsync(c => c.Office_Name == dto.Office_Name);
             if (exists)
@@ -40,6 +40,7 @@ namespace RigidboysAPI.Services
 
             _context.Customers.Add(entity);
             await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<List<Customer>> GetAllAsync(string role, string userId)

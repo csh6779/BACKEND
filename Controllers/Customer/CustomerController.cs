@@ -49,8 +49,8 @@ public class CustomerController : ControllerBase
             return Unauthorized(new { message = "인증 정보가 유효하지 않습니다." });
         try
         {
-            await _service.AddCustomerAsync(dto, userId);
-            return Ok(new { message = "고객이 등록되었습니다." });
+            var savedCustomer = await _service.AddCustomerAsync(dto, userId);
+            return Ok(savedCustomer);
         }
         catch (ArgumentException)
         {
