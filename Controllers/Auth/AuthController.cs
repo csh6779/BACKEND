@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
             return StatusCode(500, new { message = $"서버 오류: {ex.Message}" });
         }
     }
-
+    //비밀번호 제외해서 받아오도록
     [Authorize(Roles = "Admin")]
     [HttpGet("all")]
     [SwaggerOperation(

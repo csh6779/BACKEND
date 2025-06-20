@@ -61,13 +61,13 @@ builder.Services.AddScoped<LoginAttemptService>();
 // ✅ CORS 정책 등록
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(
-        "AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-        }
-    );
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // 프론트 포트 명시
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // 필요 시
+    });
 });
 
 // 3️⃣ 컨트롤러 + Swagger
@@ -123,7 +123,7 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // ✅ 미들웨어 순서 매우 중요!
-app.UseCors("AllowAll");
+app.UseCors("AllowReactApp");
 
 if (app.Environment.IsDevelopment())
 {

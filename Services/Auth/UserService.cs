@@ -64,7 +64,7 @@ public class UserService
         // ✅ 로그인 성공 → 기록 제거
         await _loginAttemptService.ClearAsync(userId);
 
-        Console.WriteLine($"✅ {user.UserId}가 로그인 하였습니다.");
+        Console.WriteLine($"{user.UserId}가 로그인 하였습니다.");
         return jwtService.GenerateToken(user.Id, user.Role);
     }
 
