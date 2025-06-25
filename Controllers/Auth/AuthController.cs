@@ -17,6 +17,7 @@ public class AuthController : ControllerBase
         _jwtService = jwtService;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     [SwaggerOperation(
         Summary = "로그인",
@@ -69,6 +70,7 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [AllowAnonymous]
     [HttpPost("register")]
     [SwaggerOperation(
         Summary = "회원가입",

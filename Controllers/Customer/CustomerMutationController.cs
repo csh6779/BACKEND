@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RigidboysAPI.Dtos;
 using RigidboysAPI.Errors;
@@ -8,6 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace RigidboysAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/customers/mutation")]
     public class CustomerMutationController : ControllerBase
