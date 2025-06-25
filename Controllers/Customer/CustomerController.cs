@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RigidboysAPI.Dtos;
 using RigidboysAPI.Errors;
@@ -5,6 +6,7 @@ using RigidboysAPI.Models;
 using RigidboysAPI.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
+[Authorize]
 [ApiController]
 [Route("api/customers")]
 public class CustomerController : ControllerBase
